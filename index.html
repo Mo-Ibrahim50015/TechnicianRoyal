@@ -10,7 +10,6 @@
             --royal-red: #d32f2f;
         }
 
-        /* منع حدوث تمرير جانبي وضمان مرونة العناصر */
         * {
             box-sizing: border-box;
             max-width: 100%;
@@ -25,7 +24,7 @@
         }
 
         header {
-            /* الامتداد PNG كبير ليتطابق مع اسم الملف المرفوع عندك */
+            /* تأكدت من كتابة الامتداد PNG كبير ليتطابق مع صورتك المرفوعة */
             background-image: url('Background.PNG'); 
             background-size: cover;
             background-position: center;
@@ -43,7 +42,7 @@
             z-index: -1;
         }
 
-        /* تنسيق الهيدر ليصبح مرن (تحت بعض في الموبايل وجنب بعض في الكمبيوتر) */
+        /* تنسيق الهيدر ليكون مرناً تلقائياً */
         .top-row {
             display: flex;
             flex-wrap: wrap; 
@@ -58,17 +57,17 @@
             min-width: 250px;
         }
 
-        .right-side h2 { font-size: clamp(1rem, 2.5vw, 1.4rem); margin: 0; }
-        .right-side h3 { font-size: clamp(1.2rem, 3.5vw, 1.8rem); color: var(--royal-red); margin: 5px 0; }
+        .right-side h2 { font-size: clamp(0.9rem, 2.5vw, 1.3rem); margin: 0; }
+        .right-side h3 { font-size: clamp(1.2rem, 4vw, 1.8rem); color: var(--royal-red); margin: 5px 0; }
 
         .center-logo {
             flex: 0 0 auto;
         }
 
-        /* ضبط حجم اللوجو ليتناسب مع الموبايل */
+        /* الشعار - حجمه يتغير تلقائياً مع الشاشة */
         .center-logo img {
-            width: 110px;
-            height: 110px;
+            width: clamp(80px, 15vw, 120px);
+            height: auto;
             border-radius: 50%;
             border: 3px solid var(--primary-blue);
             background: white;
@@ -77,10 +76,9 @@
 
         .left-side h3 { font-size: 1rem; color: var(--primary-blue); margin: 0; }
 
-        /* الأزرار بنظام الشبكة المرنة (Grid) */
+        /* الأزرار بنظام Grid للتجاوب التلقائي */
         .menu-container {
             display: grid;
-            /* الزرار بياخد سطر لوحده في الموبايل وبيتقسموا في الشاشة الكبيرة */
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 15px;
             max-width: 1000px;
@@ -95,9 +93,10 @@
             color: white;
             background-color: var(--primary-blue);
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         .menu-container button:hover {
@@ -105,6 +104,7 @@
             transform: translateY(-3px);
         }
 
+        /* قسم الحقوق - مرن أيضاً */
         .credits-row {
             display: flex;
             flex-wrap: wrap;
