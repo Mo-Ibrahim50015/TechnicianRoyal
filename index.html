@@ -5,26 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>رويال جاز - الصفحة الرئيسية</title>
     <style>
-        /* --- قسم التحكم في الأحجام المتغيرة --- */
         :root {
-            --company-name-size: 1.4rem;
-            --brand-name-size: 1.8rem;
-            --admin-title-size: 1.1rem;
-            --section-title-size: 1rem;
-            --names-font-size: 1.1rem;
-            --job-font-size: 0.9rem;
-            --buttons-font-size: 1.1rem;
-            --header-anim-duration: 1s;
+            --primary-blue: #004a99;
+            --royal-red: #d32f2f;
         }
 
-        @keyframes slideDown {
-            from { transform: translateY(-100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        @keyframes coinFlip {
-            0% { transform: rotateY(0deg); }
-            100% { transform: rotateY(360deg); }
+        /* جعل الصفحة مرنة بالكامل */
+        * {
+            box-sizing: border-box;
+            max-width: 100%; /* يمنع أي عنصر من الخروج عن حدود الشاشة */
         }
 
         body {
@@ -32,6 +21,7 @@
             margin: 0;
             padding: 0;
             background-color: #f4f7f9;
+            width: 100%;
             overflow-x: hidden;
         }
 
@@ -39,10 +29,9 @@
             background-image: url('Background.PNG'); 
             background-size: cover;
             background-position: center;
-            padding: 15px 5%;
-            border-bottom: 4px solid #004a99;
-            animation: slideDown var(--header-anim-duration) ease-out forwards; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            width: 100%; /* يأخذ عرض الشاشة بالكامل مهما كان حجمها */
+            padding: 20px 2%; /* هوامش جانبية مرنة */
+            border-bottom: 4px solid var(--primary-blue);
             position: relative;
             z-index: 100;
         }
@@ -55,118 +44,79 @@
             z-index: -1;
         }
 
-        /* تنسيق الصف العلوي ليصبح عمودياً في الشاشات الصغيرة */
+        /* توزيع مرن للهيدر */
         .top-row {
             display: flex;
-            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            gap: 15px;
-        }
-
-        .right-side, .left-side { 
-            flex: 1; 
-            text-align: center; 
-            min-width: 250px; /* يضمن نزولهم تحت بعض في الشاشات الصغيرة جداً */
-        }
-
-        .right-side h2 { margin: 0; font-size: var(--company-name-size); color: #000; }
-        .right-side h3 { margin: 5px 0 0 0; font-size: var(--brand-name-size); color: #d32f2f; }
-
-        .center-logo { 
-            flex: 0 0 auto;
-            order: -1; /* لجعل اللوجو يظهر في الأعلى في التنسيق العمودي */
+            flex-wrap: wrap; /* ينزل تحت بعضه تلقائياً لو الشاشة صغيرة */
             width: 100%;
-            display: flex;
-            justify-content: center;
-            margin-bottom: 10px;
-        }
-
-        /* تعديل حجم اللوجو ليتناسب مع الموبايل */
-        .center-logo img {
-            width: 100px;
-            height: 100px;
-            background-color: white;
-            border-radius: 50%;
-            border: 3px solid #004a99;
-            animation: coinFlip 1s ease-in-out 3;
-            animation-delay: var(--header-anim-duration);
-            animation-fill-mode: forwards;
-        }
-
-        .left-side h3 { margin: 0; font-size: var(--admin-title-size); color: #004a99; }
-        .left-side h4 { margin: 5px 0 0 0; font-size: var(--section-title-size); color: #333; }
-
-        /* صف الحقوق */
-        .credits-row {
-            display: flex;
-            justify-content: space-around;
-            padding-top: 12px;
-            margin-top: 15px;
-            border-top: 2px solid #004a99;
-            flex-wrap: wrap;
             gap: 10px;
         }
 
-        .credit-box { 
-            flex: 1; 
-            min-width: 150px;
-            text-align: center; 
+        .right-side, .left-side, .center-logo {
+            flex: 1; /* كل قسم يأخذ مساحة متساوية ويتمدد مع الشاشة */
+            text-align: center;
+            min-width: 200px; /* يضمن عدم تداخل الكلام في الشاشات الصغيرة جداً */
         }
 
-        .credit-box p { 
-            margin: 0; 
-            font-size: var(--names-font-size); 
-            font-weight: bold;
+        /* حجم الخط يتغير تلقائياً حسب حجم الشاشة */
+        .right-side h2 { font-size: clamp(1rem, 2vw, 1.4rem); margin: 0; }
+        .right-side h3 { font-size: clamp(1.2rem, 3vw, 1.8rem); color: var(--royal-red); }
+
+        .center-logo img {
+            width: 12vw; /* حجم اللوجو نسبة إلى عرض الشاشة */
+            min-width: 80px;
+            max-width: 130px;
+            height: auto;
+            border-radius: 50%;
+            border: 3px solid var(--primary-blue);
+            background: white;
         }
 
-        .job-title {
-            font-size: var(--job-font-size);
-            color: #444;
-            display: block;
-        }
-
-        /* الحاويات والأزرار */
+        /* حاوية الأزرار - تفرش بعرض الشاشة */
         .menu-container {
             display: grid;
+            /* توزيع تلقائي: الأزرار تفرش بجانب بعضها في الكمبيوتر وتترتب تحت بعضها في الموبايل */
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            max-width: 1000px;
-            margin: 30px auto;
-            padding: 20px;
+            gap: 20px;
+            width: 95%; /* تأخذ 95% من عرض الشاشة */
+            max-width: 1400px; /* أقصى عرض عشان شكلها ما يبوخ في الشاشات الضخمة */
+            margin: 40px auto;
+            padding: 10px;
         }
 
         .menu-container button {
-            padding: 15px 20px;
-            font-size: var(--buttons-font-size);
+            width: 100%;
+            padding: 20px;
+            font-size: 1.2rem;
             font-weight: bold;
             color: white;
-            background-color: #004a99;
+            background-color: var(--primary-blue);
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
-            transition: 0.3s;
-            width: 100%;
+            transition: 0.3s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         .menu-container button:hover {
             background-color: #002d5f;
-            transform: scale(1.02);
+            transform: scale(1.03); /* تكبير بسيط عند التمرير */
         }
 
-        /* --- استعلامات الوسائط (Media Queries) للشاشات المتوسطة والكبيرة --- */
-        @media (min-width: 768px) {
-            .top-row { flex-wrap: nowrap; }
-            .center-logo { order: 0; width: auto; margin: 0 20px; }
-            .center-logo img { width: 130px; height: 130px; }
-            .right-side, .left-side { text-align: right; }
-            .left-side { text-align: left; }
-            .menu-container { grid-template-columns: repeat(2, 1fr); }
+        /* تذييل الهيدر (الحقوق) */
+        .credits-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid var(--primary-blue);
         }
 
-        @media (min-width: 1024px) {
-            .menu-container { grid-template-columns: repeat(3, 1fr); }
-        }
+        .credit-box { flex: 1; min-width: 150px; text-align: center; margin-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -174,7 +124,7 @@
     <header>
         <div class="top-row">
             <div class="right-side">
-                <h2>الشركة الهندسية لإنتاج الأجهزة الكهربائية والمنزلية</h2>
+                <h2>الشركة الهندسية لإنتاج الأجهزة الكهربائية</h2>
                 <h3>رويال جاز</h3>
             </div>
 
@@ -190,20 +140,19 @@
 
         <div class="credits-row">
             <div class="credit-box">
-                <p>فكرة وإشراف: نــــــورا جـــــمــــال</p>
-                <span class="job-title">مديرة قسم الاستقصاء</span>
+                <p><b>فكرة وإشراف: نورا جمال</b></p>
+                <span>مديرة قسم الاستقصاء</span>
             </div>
-
             <div class="credit-box">
-                <p>تنفيذ وتصميم: محمد إبراهيم</p>
-                <span class="job-title">مدخل بيانات بقسم الاستقصاء</span>
+                <p><b>تنفيذ وتصميم: محمد إبراهيم</b></p>
+                <span>مدخل بيانات</span>
             </div>
         </div>
     </header>
 
     <div class="menu-container">
         <button onclick="window.location.href='technicians.html'">صفحة الفنيين</button>
-        <button>البلاغات التي تحت التنفيذ</button>
+        <button>البلاغات تحت التنفيذ</button>
         <button>البلاغات المنفذة</button>
         <button>البلاغات الأخرى</button>
         <button>الإعدادات</button>
