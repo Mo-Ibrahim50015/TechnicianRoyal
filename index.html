@@ -10,10 +10,10 @@
             --royal-red: #d32f2f;
         }
 
-        /* جعل الصفحة مرنة بالكامل */
+        /* منع حدوث تمرير جانبي وضمان مرونة العناصر */
         * {
             box-sizing: border-box;
-            max-width: 100%; /* يمنع أي عنصر من الخروج عن حدود الشاشة */
+            max-width: 100%;
         }
 
         body {
@@ -21,16 +21,15 @@
             margin: 0;
             padding: 0;
             background-color: #f4f7f9;
-            width: 100%;
             overflow-x: hidden;
         }
 
         header {
+            /* الامتداد PNG كبير ليتطابق مع اسم الملف المرفوع عندك */
             background-image: url('Background.PNG'); 
             background-size: cover;
             background-position: center;
-            width: 100%; /* يأخذ عرض الشاشة بالكامل مهما كان حجمها */
-            padding: 20px 2%; /* هوامش جانبية مرنة */
+            padding: 15px 5%;
             border-bottom: 4px solid var(--primary-blue);
             position: relative;
             z-index: 100;
@@ -44,79 +43,78 @@
             z-index: -1;
         }
 
-        /* توزيع مرن للهيدر */
+        /* تنسيق الهيدر ليصبح مرن (تحت بعض في الموبايل وجنب بعض في الكمبيوتر) */
         .top-row {
             display: flex;
-            justify-content: space-between;
+            flex-wrap: wrap; 
+            justify-content: center;
             align-items: center;
-            flex-wrap: wrap; /* ينزل تحت بعضه تلقائياً لو الشاشة صغيرة */
-            width: 100%;
-            gap: 10px;
-        }
-
-        .right-side, .left-side, .center-logo {
-            flex: 1; /* كل قسم يأخذ مساحة متساوية ويتمدد مع الشاشة */
+            gap: 15px;
             text-align: center;
-            min-width: 200px; /* يضمن عدم تداخل الكلام في الشاشات الصغيرة جداً */
         }
 
-        /* حجم الخط يتغير تلقائياً حسب حجم الشاشة */
-        .right-side h2 { font-size: clamp(1rem, 2vw, 1.4rem); margin: 0; }
-        .right-side h3 { font-size: clamp(1.2rem, 3vw, 1.8rem); color: var(--royal-red); }
+        .right-side, .left-side {
+            flex: 1;
+            min-width: 250px;
+        }
 
+        .right-side h2 { font-size: clamp(1rem, 2.5vw, 1.4rem); margin: 0; }
+        .right-side h3 { font-size: clamp(1.2rem, 3.5vw, 1.8rem); color: var(--royal-red); margin: 5px 0; }
+
+        .center-logo {
+            flex: 0 0 auto;
+        }
+
+        /* ضبط حجم اللوجو ليتناسب مع الموبايل */
         .center-logo img {
-            width: 12vw; /* حجم اللوجو نسبة إلى عرض الشاشة */
-            min-width: 80px;
-            max-width: 130px;
-            height: auto;
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
             border: 3px solid var(--primary-blue);
             background: white;
+            object-fit: contain;
         }
 
-        /* حاوية الأزرار - تفرش بعرض الشاشة */
+        .left-side h3 { font-size: 1rem; color: var(--primary-blue); margin: 0; }
+
+        /* الأزرار بنظام الشبكة المرنة (Grid) */
         .menu-container {
             display: grid;
-            /* توزيع تلقائي: الأزرار تفرش بجانب بعضها في الكمبيوتر وتترتب تحت بعضها في الموبايل */
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            width: 95%; /* تأخذ 95% من عرض الشاشة */
-            max-width: 1400px; /* أقصى عرض عشان شكلها ما يبوخ في الشاشات الضخمة */
-            margin: 40px auto;
-            padding: 10px;
+            /* الزرار بياخد سطر لوحده في الموبايل وبيتقسموا في الشاشة الكبيرة */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
         }
 
         .menu-container button {
-            width: 100%;
-            padding: 20px;
-            font-size: 1.2rem;
+            padding: 18px;
+            font-size: 1.1rem;
             font-weight: bold;
             color: white;
             background-color: var(--primary-blue);
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             cursor: pointer;
-            transition: 0.3s ease-in-out;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: 0.3s;
         }
 
         .menu-container button:hover {
             background-color: #002d5f;
-            transform: scale(1.03); /* تكبير بسيط عند التمرير */
+            transform: translateY(-3px);
         }
 
-        /* تذييل الهيدر (الحقوق) */
         .credits-row {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
-            width: 100%;
             margin-top: 20px;
-            padding-top: 15px;
+            padding-top: 10px;
             border-top: 1px solid var(--primary-blue);
         }
 
-        .credit-box { flex: 1; min-width: 150px; text-align: center; margin-bottom: 10px; }
+        .credit-box { text-align: center; padding: 10px; flex: 1 1 200px; }
     </style>
 </head>
 <body>
@@ -129,7 +127,7 @@
             </div>
 
             <div class="center-logo">
-                <img src="logo.png" alt="شعار الشركة">
+                <img src="logo.PNG" alt="شعار الشركة">
             </div>
 
             <div class="left-side">
